@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -6,7 +7,6 @@ const app = express();
 const { countConnect, checkoverLoad } = require("./helper/check.connect");
 
 //init middleware
-
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(compression());

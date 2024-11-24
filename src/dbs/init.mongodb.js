@@ -5,6 +5,8 @@ const { countConnect } = require("../helper/check.connect");
 
 const connectString = `mongodb+srv://baohung01:%40Abcabc123@cluster0.ohy5w.mongodb.net/`;
 
+console.log("ConnectString ", connectString);
+
 class Database {
 	constructor() {
 		this.connect();

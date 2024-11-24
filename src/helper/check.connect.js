@@ -18,8 +18,8 @@ const checkoverLoad = () => {
 		const memoryUse = process.memoryUsage().rss;
 		//Example maximum number of connections based on number osf cores
         // console.log(`numCores `,numCores)
-		console.log(`Active connection: ${numConnection}`);
-		console.log(`Memory use: ${memoryUse / 1024 / 1024} MB`);
+		// console.log(`Active connection: ${numConnection}`);
+		// console.log(`Memory use: ${memoryUse / 1024 / 1024} MB`);
 		const maxConnections = numCores * 5;
 		if (numConnection > maxConnections) {
 			console.log("Connection overload detected!");

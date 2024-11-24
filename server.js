@@ -7,6 +7,6 @@ const server = app.listen(PORT, () => {
 });
 
 
-process.on("SIGINT", () =>{
-    console.log('Server is destroyed')
-})
+// process.on("SIGINT", () =>{
+//     console.log('Server is destroyed')
+// })

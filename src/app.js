@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const app = express();
 const { countConnect, checkoverLoad } = require("./helper/check.connect");
+const router = require("./routers");
 
 //init middleware
 app.use(morgan("dev"));
@@ -18,9 +19,10 @@ checkoverLoad();
 
 //init routers
 
-app.get("/", (req, res) => {
-	res.send("Welcome to the eCommerce server");
-});
+// app.get("/", (req, res) => {
+// 	res.send("Welcome to the eCommerce server");
+// });
+app.use("/", router);
 
 //handling errors
 

@@ -2,7 +2,11 @@
 
 const shopModel = require("../models/shop.model");
 const bcrypt = require("bcrypt");
-const crypto = require('crypto');
+const crypto = require("node:crypto");
+const KeyTokenService = require("./keyToken.service");
+const { createTokenPair } = require("../auth/authUtils");
+const { type } = require("os");
+const { getInfoData } = require("../utils");
 
 const RoleShop = {
 	SHOP: "SHOP",
@@ -31,15 +35,63 @@ class AccessService {
 				password: passwordHash,
 				roles: [RoleShop.SHOP],
 			});
-            if (newShop) {
-                // create privateKey, publickey
-                const {privateKey, publicKey} = crypto.generateKeyPairSync('rsa', {
-                    modulusLength: 4096
-                })
+			if (newShop) {
+				// create privateKey, publickey
+				// const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+				// 	modulusLength: 4096,
+				// 	publicKeyEncoding: {
+				// 		type: "pkcs1",
+				// 		format: "pem",
+				// 	},
+				// 	privateKeyEncoding: {
+				// 		type: "pkcs1",
+				// 		format: "pem",
+				// 	},
+				// });
 
-                console.log({privateKey, publicKey}) // save collections KEYSTORE
-            }
+				const privateKey = crypto.randomBytes(64).toString("hex");
+				const publicKey = crypto.randomBytes(64).toString("hex");
+
+				// public key cryptoGraphy standards !
+
+				console.log({ privateKey, publicKey }); // save collections KEYSTORE
+				const keyStore = await KeyTokenService.createKeyToken({
+					userId: newShop._id,
+					publicKey,
+					privateKey,
+				});
+				if (!keyStore) {
+					return {
+						code: "xxxx",
+						message: "keyStore error",
+					};
+				}
+
+				// create tokens pair
+				const tokens = await createTokenPair(
+					{ userId: newShop._id, email },
+					publicKey,
+					privateKey
+				);
+				console.log(`Created Token Success:: `, tokens);
+				return {
+					code: 201,
+					metadata: {
+						shop: getInfoData({
+							fields: ["_id", "name", "email"],
+							object: newShop,
+						}),
+						tokens,
+					},
+				};
+			}
+
+			return {
+				code: 200,
+				metadata: null,
+			};
 		} catch (error) {
+			console.error(error);
 			return {
 				code: "xxx",
 				message: error.message,

@@ -4,6 +4,7 @@
 
 POST {{url_dev}}/shop/signup
 Content-Type: application/json
+x-api-key: 8465e5b7506f5258909c219840a3609ecc3bc10e10730f127da8303c4addaf138bfc44abfc8b8de70c5503414303fd6b44e3edc837e70ae0d0d236cf0289eccd
 
 {
     "name": "Shop HungLB2",

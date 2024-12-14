@@ -35,4 +35,10 @@ class BadRequestError extends ErrorResponse {
 	}
 }
 
-module.exports = { ConflictRequestError, BadRequestError };
+class AuthFailureError extends ErrorResponse {
+	constructor(message = "AUTH_FAILURE", status = 401) {
+		super(message, status);
+	}
+}
+
+module.exports = { ConflictRequestError, BadRequestError, AuthFailureError };

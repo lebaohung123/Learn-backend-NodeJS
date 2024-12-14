@@ -1,7 +1,7 @@
 "use strict";
 const jwt = require("jsonwebtoken");
 
-const createTokenPair = async (payload, publicKey, privateKey) => {
+const createTokenPair = (payload, publicKey, privateKey) => {
 	try {
 		// accessToken
 		const accessToken = jwt.sign(payload, publicKey, {
